@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Paul.ico</ApplicationIcon>
+    <ApplicationIcon>Config\Paul.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -57,7 +57,7 @@
     <None Include="Config\App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Paul.ico" />
+    <Content Include="Config\Paul.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
