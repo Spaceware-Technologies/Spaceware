@@ -16,7 +16,7 @@ namespace Spaceware
             /*Static reference into the DownloadAPI Class.*/
             DownloadAPI Installer = new DownloadAPI();
 
-            Console.Title = $"Area 51 Installer | Joshua, Maxie, PandaStudios, Pyro & Swordsith "; 
+            Console.Title = $"Area 51 Installer | Joshua, Maxie, PandaStudios, Pyro & Swordsith ";
             if (!File.Exists("Authorization.json"))
             {
                 DownloadAPI.InstallLog($"Enter Token: ");
@@ -47,4 +47,3 @@ namespace Spaceware
         }
     }
 }
- 
