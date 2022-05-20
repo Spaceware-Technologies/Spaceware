@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace Spaceware
@@ -60,6 +60,7 @@ namespace Spaceware
             }
             return 2;
         }
+
         /// <summary>
         /// Method: InitExtaction();
         /// Description: Initializes the extaction process. 
@@ -69,7 +70,7 @@ namespace Spaceware
         {
             try
             {
-                //if path is not empty install else return exception
+                /*if path is not empty install else return exception*/
                 if (zipPath == string.Empty)  return false;
                 InstallLog("Installing....", true);
                 System.IO.Compression.ZipFile.ExtractToDirectory(zipPath, $"{vrchatPath}");
@@ -80,7 +81,6 @@ namespace Spaceware
                 if(ErrorOnExtaction.InnerException != null)
                 {
                     InstallLog("Something really done goofed on Extaction, please join server and make a ticket.\nDiscord: https://discord.gg/Paul", true);
-                    return false;
                 }
             }
             return false;

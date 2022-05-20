@@ -13,13 +13,14 @@ namespace Spaceware
         [STAThread]
         public static void Main(string[] args)
         {
-            Console.Title = $"Area 51 Installer | Joshua, Maxie, PandaStudios, Pyro & Swordsith ";
+            /*Static reference into the DownloadWorker class.*/
+            DownloadAPI Installer = new DownloadAPI();
 
+            Console.Title = $"Area 51 Installer | Joshua, Maxie, PandaStudios, Pyro & Swordsith "; 
             if (!File.Exists("Authorization.json"))
             {
-                DownloadAPI.InstallLog("Enter Token: "); 
-                string token = Console.ReadLine();
-                File.AppendAllText("Authorization.json", token);
+                DownloadAPI.InstallLog($"Enter Token: ");
+                File.AppendAllText("Authorization.json", Console.ReadLine());
             }
 
             switch (Installer.InitDownload())
@@ -44,7 +45,6 @@ namespace Spaceware
                     break;
             }
         }
-        //Initializes static reference into the DownloadWorker class to allow use to a none static methods from a static method.
-        private static readonly DownloadAPI Installer = new DownloadAPI();
     }
 }
+ 
