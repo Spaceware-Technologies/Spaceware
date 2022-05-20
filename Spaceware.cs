@@ -13,7 +13,7 @@ namespace Spaceware
         [STAThread]
         public static void Main(string[] args)
         {
-            /*Static reference into the DownloadWorker class.*/
+            /*Static reference into the DownloadAPI Class.*/
             DownloadAPI Installer = new DownloadAPI();
 
             Console.Title = $"Area 51 Installer | Joshua, Maxie, PandaStudios, Pyro & Swordsith "; 
