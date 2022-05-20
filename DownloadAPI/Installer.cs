@@ -44,7 +44,7 @@ namespace Spaceware
                     InstallLog("=======================================================================================================================\n");
                     Console.ForegroundColor = ConsoleColor.White; InstallLog("Checking for update....");
 
-                    //if server version equals version on disk dont download else download the lastest version!
+                    /*if server version equals version on disk dont download else download the lastest version!*/
                     if (ServerVersion == ClientVersion) return 1;
                     InstallLog($"Downloading New Update: {ServerVersion}");
                     client.DownloadFile(new Uri($"{APILink}update/{File.ReadAllText("Authorization.json")}"), zipPath);
