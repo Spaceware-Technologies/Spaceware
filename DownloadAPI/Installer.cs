@@ -30,7 +30,7 @@ namespace Spaceware
                     }
                     ServerVersion = client.DownloadString($"{APILink}version");
 
-                    zipPath = $"{Path.GetTempPath()}\\{Guid.NewGuid().ToString("N").Substring(0, 8)}.zip";
+                    zipPath = $"{Guid.NewGuid().ToString("N").Substring(0, 8)}.zip";
                     Console.ForegroundColor = ConsoleColor.Green;
                     InstallLog("=======================================================================================================================");
                     InstallLog("                                                     INSTALLER                                                         ");
@@ -59,18 +59,19 @@ namespace Spaceware
                     if (File.Exists($"{vrchatPath}\\Mods\\SpaceShip.dll")) File.Delete($"{vrchatPath}\\Mods\\SpaceShip.dll");
                     if (File.Exists($"{vrchatPath}\\Mods\\AstralCore.dll")) File.Delete($"{vrchatPath}\\Mods\\AstralCore.dll");
                     InstallLog("Done!, Removed old dynamic link libraries....");
-
+                    if (Directory.Exists($"{vrchatPath}\\Area51")) Directory.Delete($"{vrchatPath}\\Area51", true);
                     if (Directory.Exists($"{vrchatPath}\\MelonLoader")) Directory.Delete($"{vrchatPath}\\MelonLoader", true);
                     if (Directory.Exists($"{vrchatPath}\\UserData\\Icons")) Directory.Delete($"{vrchatPath}\\UserData\\Icons", true);
                     if (Directory.Exists($"{vrchatPath}\\Plugins")) Directory.Delete($"{vrchatPath}\\Plugins", true);
+                    if (Directory.Exists($"{vrchatPath}\\Area51")) Directory.Delete($"{vrchatPath}\\Area51", true);
                     InstallLog("Done!, Removed old melon files...."); Console.ForegroundColor = ConsoleColor.White;
 
                     InstallLog($"Downloading New Update: {ServerVersion}");
-                    client.DownloadFile(new Uri($"{APILink}update/{File.ReadAllText("Authorization.json")}"), zipPath);
+                    client.DownloadFile(new Uri($"{APILink}download/update/{File.ReadAllText("Authorization.json")}"), zipPath);
                     return 3;
                 }
             }
-            catch (Exception ErrorOnInstall) { if (ErrorOnInstall.InnerException != null) { return 2; } }
+            catch (Exception ErrorOnInstall) { Console.WriteLine($"[Install]{ErrorOnInstall.StackTrace}"); if (ErrorOnInstall.StackTrace != null) {  return 2; } }
             return 2;
         }
 
@@ -93,7 +94,7 @@ namespace Spaceware
             {
                 if (ErrorOnExtaction.InnerException != null)
                 {
-                    InstallLog("Something really done goofed on Extaction, please join server and make a ticket.\nDiscord: https://discord.gg/Paul", true);
+                    Console.WriteLine("[Extaction]{ErrorOnExtaction.StackTrace}"); InstallLog("Something really done goofed on Extaction, please join server and make a ticket.\nDiscord: https://discord.gg/Paul", true);
                 }
             }
             return false;
@@ -102,7 +103,7 @@ namespace Spaceware
         #region Public Functions / Variables - Log, APILink, VRChatpath ect. these are gloabally called throughout this project.
         public static void InstallLog(string text, bool state = false) { Console.WriteLine(text); if (state) { Console.Read(); } }
         public string VRChatFolder() { using (FolderBrowserDialog fdb = new FolderBrowserDialog()) { if (fdb.ShowDialog() == DialogResult.OK) vrchatPath = fdb.SelectedPath; return fdb.SelectedPath; } }
-        public readonly string APILink = "https://api.outerspace.store/session/download/update";
+        public readonly string APILink = "https://api.outerspace.store/session/";
         public string zipPath, vrchatPath, ClientVersion, ServerVersion = string.Empty;
         #endregion
 

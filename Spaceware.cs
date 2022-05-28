@@ -13,7 +13,7 @@ namespace Spaceware
         /// </summary>
         [STAThread] //this is for the OpenFolderDialog
         public static void Main()
-        {
+        {   
             /*Static reference into the DownloadAPI Class.*/
             DownloadAPI Installer = new DownloadAPI();
             Console.Title = $"Area 51 Installer | Joshua, Maxie, PandaStudios, Pyro & Swordsith ";
@@ -35,13 +35,14 @@ namespace Spaceware
                     break;
                 case 3:
                     DownloadAPI.InstallLog($"Download Complete!, Press enter to install.", true);
+
                     if (Installer.InitExtaction())
                     {
                         DownloadAPI.InstallLog($"Install Complete!, Press enter to exit & run vrchat.", true);
                         try
                         {
                             File.Delete(Installer.zipPath);
-                            File.Move($"Authorization.json", $"{Installer.vrchatPath}\\Area51\\Authorization.json");
+                            File.Move("Authorization.json", $"{Installer.vrchatPath}\\Area51\\Authorization.json"); 
                             Process.Start($"{Installer.vrchatPath}\\VRChat.exe");
                         }
                         catch (Exception InstallError) { DownloadAPI.InstallLog(InstallError.StackTrace); }
