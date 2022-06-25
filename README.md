@@ -26,7 +26,7 @@ If You Have An Issue Delete Area51 Folder first
 ## Download the lastest release:
 ![Here](https://github.com/Spaceware-Technologies/Spaceware/releases)
 
-### About Spaceware
+## About Spaceware:
 
 This makes installing all necessary files for area51 easy and painless. 
 
