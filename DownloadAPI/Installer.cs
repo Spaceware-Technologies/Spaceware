@@ -31,8 +31,8 @@ namespace Spaceware
                     else { ClientVersion = "1.0.0.0"; }
                    
                     ServerVersion = client.DownloadString($"{APILink}version");
-
                     zipPath = $"{Guid.NewGuid().ToString("N").Substring(0, 8)}.zip";
+
                     Console.ForegroundColor = ConsoleColor.Green;
                     InstallLog("=======================================================================================================================");
                     InstallLog("                                                     INSTALLER                                                         ");
@@ -55,25 +55,30 @@ namespace Spaceware
                     /*If server version equals version on disk dont download else download the lastest version!*/
                     if (ServerVersion == ClientVersion) return 1;
 
-                    /*removes older melonloader Folder/proxy.dll*/
-                  
-                    if (File.Exists($"{vrchatPath}\\version.dll") || File.Exists($"{vrchatPath}\\Mods\\SpaceShip.dll") || File.Exists($"{vrchatPath}\\Mods\\AstralCore.dll"))
+                    /*removes older melonloader Folder/Files/proxy.dll*/
+                    string[] FoldersNames = { "MelonLoader", "Area51", "UserData\\Icons", "UserData\\Icons", "Plugins" };
+                    string[] FileNames = { "version.dll", "Mods\\SpaceShip.dll", "Mods\\AstralCore.dll" };
+                    for (int i = 0; i < FoldersNames.Length; i++)
                     {
-                        Console.ForegroundColor = ConsoleColor.Yellow; InstallLog("Initializing clean up....");
-                        File.Delete($"{vrchatPath}\\version.dll");
-                        File.Delete($"{vrchatPath}\\Mods\\SpaceShip.dll");
-                        File.Delete($"{vrchatPath}\\Mods\\AstralCore.dll");
-                        InstallLog("Done!, Removed old dynamic link libraries....");
+                       if (Directory.Exists($"{vrchatPath}\\{FoldersNames[i]}"))
+                       {
+                            Directory.Delete($"{vrchatPath}\\{FoldersNames[i]}", true);
+                            InstallLog($"Removed {FoldersNames[i]}, Done!");
+                       }
+
+                       if (i == FoldersNames.Length) break;
+                    }
+                    for (int i = 0; i < FileNames.Length; i++)
+                    {
+                       if (File.Exists($"{vrchatPath}\\{FileNames[i]}"))
+                       {
+                            File.Delete($"{vrchatPath}\\{FileNames[i]}");
+                            InstallLog($"Removed {FileNames[i]}, Done!");
+                       }
+
+                       if (i == FileNames.Length) break;
                     }
 
-                    if (Directory.Exists($"{vrchatPath}\\Area51") || Directory.Exists($"{vrchatPath}\\MelonLoader") || Directory.Exists($"{vrchatPath}\\UserData\\Icons") || Directory.Exists($"{vrchatPath}\\Plugins"))
-                    {
-                        Directory.Delete($"{vrchatPath}\\Area51", true);
-                        Directory.Delete($"{vrchatPath}\\MelonLoader", true);
-                        Directory.Delete($"{vrchatPath}\\UserData\\Icons", true);
-                        Directory.Delete($"{vrchatPath}\\Plugins", true);
-                        InstallLog("Done!, Removed old melon files...."); Console.ForegroundColor = ConsoleColor.White;
-                    }
                     InstallLog($"Downloading New Update: {ServerVersion}");
                     client.DownloadFile(new Uri($"{APILink}download/update/{File.ReadAllText("Authorization.json")}"), zipPath);
                     return 3;

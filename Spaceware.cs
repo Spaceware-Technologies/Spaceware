@@ -19,16 +19,13 @@ namespace Spaceware
             Console.Title = $"Area 51 Installer | Joshua, Maxie, PandaStudios & Swordsith ";
             if (!File.Exists("Authorization.json"))
             {
-
                 DownloadAPI.InstallLog($"Enter Token: ");
+                string token = Console.ReadLine();
+                if (!Installer.ValidateToken(token))
                 {
-                    string token =  Console.ReadLine();
-                    if (!Installer.ValidateToken(token))
-                    {
-                        DownloadAPI.InstallLog("Seems your trying to use an invalid token, please join server and make a ticket.\nDiscord: https://discord.gg/Paul", true);
-                    }
-                    File.AppendAllText("Authorization.json", token);
+                    DownloadAPI.InstallLog("Seems your trying to use an invalid token, please join server and make a ticket.\nDiscord: https://discord.gg/Paul", true);
                 }
+                File.AppendAllText("Authorization.json", token);
             }
             switch (Installer.InitDownload())
             {
