@@ -8,6 +8,66 @@ namespace Spaceware
 {
     class DownloadAPI
     {
+
+        /// <summary>
+        /// Method: DisplayBanner(int option)
+        /// Description: Displays Banner With Question. 
+        /// Usage: DownloadWorker.DisplayBanner(1);
+        /// Values: 1 = Installing | 2 = MenuOptions
+        /// </summary>
+        public void DisplayBanner(int option)
+        {
+
+            switch (option)
+            {
+                case 1:
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    InstallLog("=======================================================================================================================");
+                    InstallLog("                                                     INSTALLER                                                         ");
+                    InstallLog("                                                                                                                       ");
+                    InstallLog("                                    █████╗ ██████╗ ███████╗ █████╗     ███████╗ ██╗                                    ");
+                    InstallLog("                                   ██╔══██╗██╔══██╗██╔════╝██╔══██╗    ██╔════╝███║                                    ");
+                    InstallLog("                                   ███████║██████╔╝█████╗  ███████║    ███████╗╚██║                                    ");
+                    InstallLog("                                   ██╔══██║██╔══██╗██╔══╝  ██╔══██║    ╚════██║ ██║                                    ");
+                    InstallLog("                                   ██║  ██║██║  ██║███████╗██║  ██║    ███████║ ██║                                    ");
+                    InstallLog("                                   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝    ╚══════╝ ╚═╝                                    ");
+                    InstallLog("                                *__________________________________________________*                                   ");
+                    InstallLog("                                                                                                                       ");
+                    InstallLog("                                        A Spaced out installer for Area51                                              ");
+                    InstallLog("                          The Developers's: Joshua, Maxie, PandaStudios & Swordsith                                    ");
+                    InstallLog($"                        Client Website: https://outerspace.store/ | Client Version: {ClientVersion}                   ");
+                    InstallLog("                                                                                                                       ");
+                    InstallLog("=======================================================================================================================\n");
+                    Console.ForegroundColor = ConsoleColor.White; InstallLog("Checking for update....");
+                    break;
+                case 2:
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    InstallLog("=======================================================================================================================");
+                    InstallLog("                                                     INSTALLER                                                         ");
+                    InstallLog("                                                                                                                       ");
+                    InstallLog("                                    █████╗ ██████╗ ███████╗ █████╗     ███████╗ ██╗                                    ");
+                    InstallLog("                                   ██╔══██╗██╔══██╗██╔════╝██╔══██╗    ██╔════╝███║                                    ");
+                    InstallLog("                                   ███████║██████╔╝█████╗  ███████║    ███████╗╚██║                                    ");
+                    InstallLog("                                   ██╔══██║██╔══██╗██╔══╝  ██╔══██║    ╚════██║ ██║                                    ");
+                    InstallLog("                                   ██║  ██║██║  ██║███████╗██║  ██║    ███████║ ██║                                    ");
+                    InstallLog("                                   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝    ╚══════╝ ╚═╝                                    ");
+                    InstallLog("                                *__________________________________________________*                                   ");
+                    InstallLog("                                                                                                                       ");
+                    InstallLog("                                        A Spaced out installer for Area51                                              ");
+                    InstallLog("                          The Developers's: Joshua, Maxie, PandaStudios & Swordsith                                    ");
+                    InstallLog($"                                  Client Website: https://outerspace.store/                                           ");
+                    InstallLog("                                                                                                                       ");
+                    InstallLog("                                             Please Choose An Option:                                                  ");
+                    InstallLog("                                              - 1.)  Installer                                                         ");
+                    InstallLog("                                              - 2.)  Unban Tool                                                        ");
+                    InstallLog("                                                                                                                       ");
+                    InstallLog("=======================================================================================================================\n");
+                    Console.ForegroundColor = ConsoleColor.White; InstallLog("Choose an Option?: ");
+                    break;
+            }
+        }
+
+
         /// <summary>
         /// Method: InitDownload();
         /// Description: Initializes the installer process. 
@@ -29,28 +89,11 @@ namespace Spaceware
                         ClientVersion = FileVersionInfo.GetVersionInfo($"{vrchatPath}\\Area51\\DLL\\Area51.dll").FileVersion;
                     }
                     else { ClientVersion = "1.0.0.0"; }
-                   
+
                     ServerVersion = client.DownloadString($"{APILink}version");
                     zipPath = $"{Guid.NewGuid().ToString("N").Substring(0, 8)}.zip";
 
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    InstallLog("=======================================================================================================================");
-                    InstallLog("                                                     INSTALLER                                                         ");
-                    InstallLog("                                                                                                                       ");
-                    InstallLog("                                    █████╗ ██████╗ ███████╗ █████╗     ███████╗ ██╗                                    ");
-                    InstallLog("                                   ██╔══██╗██╔══██╗██╔════╝██╔══██╗    ██╔════╝███║                                    ");
-                    InstallLog("                                   ███████║██████╔╝█████╗  ███████║    ███████╗╚██║                                    ");
-                    InstallLog("                                   ██╔══██║██╔══██╗██╔══╝  ██╔══██║    ╚════██║ ██║                                    ");
-                    InstallLog("                                   ██║  ██║██║  ██║███████╗██║  ██║    ███████║ ██║                                    ");
-                    InstallLog("                                   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝    ╚══════╝ ╚═╝                                    ");
-                    InstallLog("                                *___________________________________________________*                                  ");
-                    InstallLog("                                                                                                                       ");
-                    InstallLog("                                        A Spaced out installer for Area51                                              ");
-                    InstallLog("                          The Developers's: Joshua, Maxie, PandaStudios & Swordsith                                    ");
-                    InstallLog($"                        Client Website: https://outerspace.store/ | Client Version: {ClientVersion}                   ");
-                    InstallLog("                                                                                                                       ");
-                    InstallLog("=======================================================================================================================\n");
-                    Console.ForegroundColor = ConsoleColor.White; InstallLog("Checking for update....");
+                    DisplayBanner(1);
 
                     /*If server version equals version on disk dont download else download the lastest version!*/
                     if (ServerVersion == ClientVersion) return 1;
@@ -60,23 +103,23 @@ namespace Spaceware
                     string[] FileNames = { "version.dll", "Mods\\SpaceShip.dll", "Mods\\AstralCore.dll" };
                     for (int i = 0; i < FoldersNames.Length; i++)
                     {
-                       if (Directory.Exists($"{vrchatPath}\\{FoldersNames[i]}"))
-                       {
+                        if (Directory.Exists($"{vrchatPath}\\{FoldersNames[i]}"))
+                        {
                             Directory.Delete($"{vrchatPath}\\{FoldersNames[i]}", true);
                             InstallLog($"Removed {FoldersNames[i]}, Done!");
-                       }
+                        }
 
-                       if (i == FoldersNames.Length) break;
+                        if (i == FoldersNames.Length) break;
                     }
                     for (int i = 0; i < FileNames.Length; i++)
                     {
-                       if (File.Exists($"{vrchatPath}\\{FileNames[i]}"))
-                       {
+                        if (File.Exists($"{vrchatPath}\\{FileNames[i]}"))
+                        {
                             File.Delete($"{vrchatPath}\\{FileNames[i]}");
                             InstallLog($"Removed {FileNames[i]}, Done!");
-                       }
+                        }
 
-                       if (i == FileNames.Length) break;
+                        if (i == FileNames.Length) break;
                     }
 
                     InstallLog($"Downloading New Update: {ServerVersion}");
@@ -84,7 +127,7 @@ namespace Spaceware
                     return 3;
                 }
             }
-            catch (Exception ErrorOnInstall) { Console.WriteLine($"[Install]{ErrorOnInstall.StackTrace}"); if (ErrorOnInstall.StackTrace != null) {  return 2; } }
+            catch (Exception ErrorOnInstall) { Console.WriteLine($"[Install]{ErrorOnInstall.StackTrace}"); if (ErrorOnInstall.StackTrace != null) { return 2; } }
             return 2;
         }
 
@@ -124,17 +167,17 @@ namespace Spaceware
             {
                 using (var client = new WebClient { Headers = { "Accept: text/html, application/xhtml+xml, */*", "User-Agent: SpacewareAPI/9.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; SpacewareAPI/9.0)" } })
                 {
-                    if (client.DownloadString($"{APILink}check/{token}").Contains("True")) return true;                   
+                    if (client.DownloadString($"{APILink}check/{token}").Contains("True")) return true;
                 }
             }
             catch { }
             return false;
         }
 
-        public string VRChatFolder() 
-        { 
-            using (OpenFileDialog fdb = new OpenFileDialog()) 
-            { 
+        public string VRChatFolder()
+        {
+            using (OpenFileDialog fdb = new OpenFileDialog())
+            {
                 if (fdb.ShowDialog() == DialogResult.OK)
                 {
                     fdb.Title = "Find and Select VRChat.exe";
@@ -145,7 +188,7 @@ namespace Spaceware
                     vrchatPath = Path.GetDirectoryName(fdb.FileName);
                 }
                 return vrchatPath;
-            } 
+            }
         }
 
         #region Public Functions / Variables - Log, APILink, VRChatpath ect. these are gloabally called throughout this project.

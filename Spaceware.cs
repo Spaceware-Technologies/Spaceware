@@ -16,17 +16,7 @@ namespace Spaceware
         {
 
             Console.Title = $"Area 51 Installer | Joshua, Maxie, PandaStudios & Swordsith";
-            Console.ForegroundColor = ConsoleColor.Green;
-            DownloadAPI.InstallLog($"........................................................................................................................");
-            DownloadAPI.InstallLog($".                                                                                                                      .");
-            DownloadAPI.InstallLog($".                                                                                                                      .");
-            DownloadAPI.InstallLog($".                                             Please Choose An Option:                                                 .");
-            DownloadAPI.InstallLog($".                                              - 1.)  For The Installer                                                .");
-            DownloadAPI.InstallLog($".                                              - 2.)  Unban Tool                                                       .");
-            DownloadAPI.InstallLog($".                                                                                                                      .");
-            DownloadAPI.InstallLog($"........................................................................................................................");
-            DownloadAPI.InstallLog($"Choose an Option?: ");
-            Console.ForegroundColor = ConsoleColor.White;
+            Installer.DisplayBanner(2);
             switch (Console.ReadLine())
             {
                 case "1":
@@ -41,7 +31,7 @@ namespace Spaceware
         private static void InitSpaceware()
         {
             /*Static reference into the DownloadAPI Class.*/
-            DownloadAPI Installer = new DownloadAPI();
+
             if (!File.Exists("Authorization.json"))
             {
                 DownloadAPI.InstallLog($"Enter Token: ");
@@ -81,6 +71,9 @@ namespace Spaceware
                     break;
             }
         }
+        
+
+        public static DownloadAPI Installer = new DownloadAPI();
     }
 }
 
