@@ -15,16 +15,16 @@
 
 ## How to:  
 ```
-Download the lastest release ![Here](https://github.com/Spaceware-Technologies/Spaceware/releases)
-
 Installation
 • 1.) Download & Open Installer
 • 2.) Enter Key & Find 'VRChat.exe'
 • 3.) Click 'OK' & Follow On Screen Prompts
 
 If You Have An Issue Delete Area51 Folder first
-
 ```
+
+## Download the lastest release:
+![Here](https://github.com/Spaceware-Technologies/Spaceware/releases)
 
 ### About Spaceware
 
