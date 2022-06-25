@@ -56,9 +56,10 @@ namespace Spaceware
                     if (ServerVersion == ClientVersion) return 1;
 
                     /*removes older melonloader Folder/proxy.dll*/
-                    Console.ForegroundColor = ConsoleColor.Yellow; InstallLog("Initializing clean up....");
+                  
                     if (File.Exists($"{vrchatPath}\\version.dll") || File.Exists($"{vrchatPath}\\Mods\\SpaceShip.dll") || File.Exists($"{vrchatPath}\\Mods\\AstralCore.dll"))
                     {
+                        Console.ForegroundColor = ConsoleColor.Yellow; InstallLog("Initializing clean up....");
                         File.Delete($"{vrchatPath}\\version.dll");
                         File.Delete($"{vrchatPath}\\Mods\\SpaceShip.dll");
                         File.Delete($"{vrchatPath}\\Mods\\AstralCore.dll");
