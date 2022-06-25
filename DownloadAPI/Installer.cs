@@ -43,10 +43,10 @@ namespace Spaceware
                     InstallLog("                                   ██╔══██║██╔══██╗██╔══╝  ██╔══██║    ╚════██║ ██║                                    ");
                     InstallLog("                                   ██║  ██║██║  ██║███████╗██║  ██║    ███████║ ██║                                    ");
                     InstallLog("                                   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝    ╚══════╝ ╚═╝                                    ");
-                    InstallLog("                               *____________________________________________________*                                  ");
+                    InstallLog("                                *____________________________________________________*                                 ");
                     InstallLog("                                                                                                                       ");
                     InstallLog("                                        A Spaced out installer for Area51                                              ");
-                    InstallLog("                          The Developers's: Joshua, Maxie, PandaStudios, Pyro & Swordsith                              ");
+                    InstallLog("                          The Developers's: Joshua, Maxie, PandaStudios & Swordsith                                    ");
                     InstallLog($"                        Client Website: https://outerspace.store/ | Client Version: {ClientVersion}                   ");
                     InstallLog("                                                                                                                       ");
                     InstallLog("=======================================================================================================================\n");
