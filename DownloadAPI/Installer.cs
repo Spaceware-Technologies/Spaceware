@@ -43,7 +43,7 @@ namespace Spaceware
                     InstallLog("                                   ██╔══██║██╔══██╗██╔══╝  ██╔══██║    ╚════██║ ██║                                    ");
                     InstallLog("                                   ██║  ██║██║  ██║███████╗██║  ██║    ███████║ ██║                                    ");
                     InstallLog("                                   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝    ╚══════╝ ╚═╝                                    ");
-                    InstallLog("                                *____________________________________________________*                                 ");
+                    InstallLog("                                *___________________________________________________*                                  ");
                     InstallLog("                                                                                                                       ");
                     InstallLog("                                        A Spaced out installer for Area51                                              ");
                     InstallLog("                          The Developers's: Joshua, Maxie, PandaStudios & Swordsith                                    ");
