@@ -109,7 +109,7 @@ namespace Spaceware
 
         /// <summary>
         /// Method: ValidateToken(string token);
-        /// Description: Initializes the extaction process. 
+        /// Description: Checks validity of the token. 
         /// Usage: DownloadWorker.InitExtaction("A513-A512-A514");
         /// </summary>
         public bool ValidateToken(string token)
