@@ -170,6 +170,11 @@ namespace Spaceware
             return false;
         }
 
+        /// <summary>
+        /// Method: VRChatFolder();
+        /// Description: Shows A FileDialogBrowser To Obtain VRC Folder Path. 
+        /// Usage: DownloadWorker.VRChatFolder();
+        /// </summary>
         public string VRChatFolder()
         {
             using (OpenFileDialog fdb = new OpenFileDialog())
