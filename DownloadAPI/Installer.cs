@@ -21,7 +21,7 @@ namespace Spaceware
                 using (var client = new WebClient { Headers = { "Accept: text/html, application/xhtml+xml, */*", "User-Agent: SpacewareAPI/9.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; SpacewareAPI/9.0)" } })
                 {
                     /*if selected folder path is Empty or doesnt = VRChat return folder not found*/
-                    if (VRChatFolder() == string.Empty | !vrchatPath.Contains("VRChat")) return 0;
+                    if (VRChatFolder() == null || !vrchatPath.Contains("VRChat")) return 0;
 
                     /*Version Info / Downlaod Path*/
                     if (File.Exists($"{vrchatPath}\\Area51\\DLL\\Area51.dll"))
