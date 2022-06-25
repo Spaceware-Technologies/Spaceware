@@ -17,7 +17,6 @@ namespace Spaceware
         /// </summary>
         public void DisplayBanner(int option)
         {
-
             switch (option)
             {
                 case 1:
@@ -67,7 +66,6 @@ namespace Spaceware
             }
         }
 
-
         /// <summary>
         /// Method: InitDownload();
         /// Description: Initializes the installer process. 
@@ -90,9 +88,9 @@ namespace Spaceware
                     }
                     else { ClientVersion = "1.0.0.0"; }
 
+                    /*Obtains ServerVersion, zippath and Displays install banner*/
                     ServerVersion = client.DownloadString($"{APILink}version");
                     zipPath = $"{Guid.NewGuid().ToString("N").Substring(0, 8)}.zip";
-
                     DisplayBanner(1);
 
                     /*If server version equals version on disk dont download else download the lastest version!*/
@@ -103,23 +101,21 @@ namespace Spaceware
                     string[] FileNames = { "version.dll", "Mods\\SpaceShip.dll", "Mods\\AstralCore.dll" };
                     for (int i = 0; i < FoldersNames.Length; i++)
                     {
+                        if (i == FoldersNames.Length) break;
                         if (Directory.Exists($"{vrchatPath}\\{FoldersNames[i]}"))
                         {
                             Directory.Delete($"{vrchatPath}\\{FoldersNames[i]}", true);
-                            InstallLog($"Removed {FoldersNames[i]}, Done!");
+                            InstallLog($"Removed {vrchatPath}\\{FoldersNames[i]}, Done!");
                         }
-
-                        if (i == FoldersNames.Length) break;
                     }
                     for (int i = 0; i < FileNames.Length; i++)
                     {
+                        if (i == FileNames.Length) break;
                         if (File.Exists($"{vrchatPath}\\{FileNames[i]}"))
                         {
                             File.Delete($"{vrchatPath}\\{FileNames[i]}");
-                            InstallLog($"Removed {FileNames[i]}, Done!");
+                            InstallLog($"Removed {vrchatPath}\\{FileNames[i]}, Done!");
                         }
-
-                        if (i == FileNames.Length) break;
                     }
 
                     InstallLog($"Downloading New Update: {ServerVersion}");
