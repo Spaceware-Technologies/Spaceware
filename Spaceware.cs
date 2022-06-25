@@ -29,9 +29,6 @@ namespace Spaceware
                     }
                     File.AppendAllText("Authorization.json", token);
                 }
-
-                
-
             }
             switch (Installer.InitDownload())
             {
