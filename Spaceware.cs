@@ -13,10 +13,35 @@ namespace Spaceware
         /// </summary>
         [STAThread] //this is for the OpenFolderDialog
         public static void Main()
-        {   
+        {
+
+            Console.Title = $"Area 51 Installer | Joshua, Maxie, PandaStudios & Swordsith";
+            Console.ForegroundColor = ConsoleColor.Green;
+            DownloadAPI.InstallLog($"........................................................................................................................");
+            DownloadAPI.InstallLog($".                                                                                                                      .");
+            DownloadAPI.InstallLog($".                                                                                                                      .");
+            DownloadAPI.InstallLog($".                                             Please Choose An Option:                                                 .");
+            DownloadAPI.InstallLog($".                                              - 1.)  For The Installer                                                .");
+            DownloadAPI.InstallLog($".                                              - 2.)  Unban Tool                                                       .");
+            DownloadAPI.InstallLog($".                                                                                                                      .");
+            DownloadAPI.InstallLog($"........................................................................................................................");
+            DownloadAPI.InstallLog($"Choose an Option?: ");
+            Console.ForegroundColor = ConsoleColor.White;
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    InitSpaceware();
+                    break;
+                case "2":
+                    Process.Start("https://github.com/Spaceware-Technologies/HWID-Spoofer-For-VRC");
+                    break;
+            }
+
+        }
+        private static void InitSpaceware()
+        {
             /*Static reference into the DownloadAPI Class.*/
             DownloadAPI Installer = new DownloadAPI();
-            Console.Title = $"Area 51 Installer | Joshua, Maxie, PandaStudios & Swordsith ";
             if (!File.Exists("Authorization.json"))
             {
                 DownloadAPI.InstallLog($"Enter Token: ");
@@ -48,7 +73,7 @@ namespace Spaceware
                         try
                         {
                             File.Delete(Installer.zipPath);
-                            File.Move("Authorization.json", $"{Installer.vrchatPath}\\Area51\\Authorization.json"); 
+                            File.Move("Authorization.json", $"{Installer.vrchatPath}\\Area51\\Authorization.json");
                             Process.Start($"{Installer.vrchatPath}\\VRChat.exe");
                         }
                         catch (Exception InstallError) { DownloadAPI.InstallLog(InstallError.StackTrace); }
@@ -58,3 +83,6 @@ namespace Spaceware
         }
     }
 }
+
+
+
