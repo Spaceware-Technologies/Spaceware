@@ -13,7 +13,7 @@
 # Click The Video Watch The Full Tutorial 
 [![Watch the video](https://im3.ezgif.com/tmp/ezgif-3-011285c37d.gif)](https://youtu.be/1Yviy5GHmEQ)
 
-## How to:  
+### How to:  
 ```
 Installation
 • 1.) Download & Open Installer
@@ -23,10 +23,10 @@ Installation
 If You Have An Issue Delete Area51 Folder first
 ```
 
-## Download the lastest release:
+### Download the lastest release:
 ![Here](https://github.com/Spaceware-Technologies/Spaceware/releases)
 
-## About Spaceware:
+### About Spaceware:
 
 This makes installing all necessary files for area51 easy and painless. 
 
