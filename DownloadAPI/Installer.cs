@@ -21,13 +21,15 @@ namespace Spaceware
                 using (var client = new WebClient { Headers = { "Accept: text/html, application/xhtml+xml, */*", "User-Agent: SpacewareAPI/9.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; SpacewareAPI/9.0)" } })
                 {
                     /*if selected folder path is Empty or doesnt = VRChat return folder not found*/
-                    if (VRChatFolder() == string.Empty | !vrchatPath.Contains("VRChat")) return 0;
+                    if (VRChatFolder() == string.Empty | !vrchatPath.Contains("VRChat") || !vrchatPath.Contains("vrchat-vrchat")) return 0;
 
                     /*Version Info / Downlaod Path*/
-                    if (File.Exists($"{vrchatPath}\\Area51\\DLL\\Area51.dll")) { ClientVersion = FileVersionInfo.GetVersionInfo($"{vrchatPath}\\Area51\\DLL\\Area51.dll").FileVersion;} else
+                    if (File.Exists($"{vrchatPath}\\Area51\\DLL\\Area51.dll"))
                     {
-                        ClientVersion = "1.0.0.0";
+                        ClientVersion = FileVersionInfo.GetVersionInfo($"{vrchatPath}\\Area51\\DLL\\Area51.dll").FileVersion;
                     }
+                    else { ClientVersion = "1.0.0.0"; }
+                   
                     ServerVersion = client.DownloadString($"{APILink}version");
 
                     zipPath = $"{Guid.NewGuid().ToString("N").Substring(0, 8)}.zip";
@@ -55,17 +57,22 @@ namespace Spaceware
 
                     /*removes older melonloader Folder/proxy.dll*/
                     Console.ForegroundColor = ConsoleColor.Yellow; InstallLog("Initializing clean up....");
-                    if (File.Exists($"{vrchatPath}\\version.dll")) File.Delete($"{vrchatPath}\\version.dll");
-                    if (File.Exists($"{vrchatPath}\\Mods\\SpaceShip.dll")) File.Delete($"{vrchatPath}\\Mods\\SpaceShip.dll");
-                    if (File.Exists($"{vrchatPath}\\Mods\\AstralCore.dll")) File.Delete($"{vrchatPath}\\Mods\\AstralCore.dll");
-                    InstallLog("Done!, Removed old dynamic link libraries....");
-                    if (Directory.Exists($"{vrchatPath}\\Area51")) Directory.Delete($"{vrchatPath}\\Area51", true);
-                    if (Directory.Exists($"{vrchatPath}\\MelonLoader")) Directory.Delete($"{vrchatPath}\\MelonLoader", true);
-                    if (Directory.Exists($"{vrchatPath}\\UserData\\Icons")) Directory.Delete($"{vrchatPath}\\UserData\\Icons", true);
-                    if (Directory.Exists($"{vrchatPath}\\Plugins")) Directory.Delete($"{vrchatPath}\\Plugins", true);
-                    if (Directory.Exists($"{vrchatPath}\\Area51")) Directory.Delete($"{vrchatPath}\\Area51", true);
-                    InstallLog("Done!, Removed old melon files...."); Console.ForegroundColor = ConsoleColor.White;
+                    if (File.Exists($"{vrchatPath}\\version.dll") || File.Exists($"{vrchatPath}\\Mods\\SpaceShip.dll") || File.Exists($"{vrchatPath}\\Mods\\AstralCore.dll"))
+                    {
+                        File.Delete($"{vrchatPath}\\version.dll");
+                        File.Delete($"{vrchatPath}\\Mods\\SpaceShip.dll");
+                        File.Delete($"{vrchatPath}\\Mods\\AstralCore.dll");
+                        InstallLog("Done!, Removed old dynamic link libraries....");
+                    }
 
+                    if (Directory.Exists($"{vrchatPath}\\Area51") || Directory.Exists($"{vrchatPath}\\MelonLoader") || Directory.Exists($"{vrchatPath}\\UserData\\Icons") || Directory.Exists($"{vrchatPath}\\Plugins"))
+                    {
+                        Directory.Delete($"{vrchatPath}\\Area51", true);
+                        Directory.Delete($"{vrchatPath}\\MelonLoader", true);
+                        Directory.Delete($"{vrchatPath}\\UserData\\Icons", true);
+                        Directory.Delete($"{vrchatPath}\\Plugins", true);
+                        InstallLog("Done!, Removed old melon files...."); Console.ForegroundColor = ConsoleColor.White;
+                    }
                     InstallLog($"Downloading New Update: {ServerVersion}");
                     client.DownloadFile(new Uri($"{APILink}download/update/{File.ReadAllText("Authorization.json")}"), zipPath);
                     return 3;
@@ -100,9 +107,43 @@ namespace Spaceware
             return false;
         }
 
+        /// <summary>
+        /// Method: ValidateToken(string token);
+        /// Description: Initializes the extaction process. 
+        /// Usage: DownloadWorker.InitExtaction("A513-A512-A514");
+        /// </summary>
+        public bool ValidateToken(string token)
+        {
+            try
+            {
+                using (var client = new WebClient { Headers = { "Accept: text/html, application/xhtml+xml, */*", "User-Agent: SpacewareAPI/9.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; SpacewareAPI/9.0)" } })
+                {
+                    if (client.DownloadString($"{APILink}check/{token}").Contains("True")) return true;                   
+                }
+            }
+            catch { }
+            return false;
+        }
+
+        public string VRChatFolder() 
+        { 
+            using (OpenFileDialog fdb = new OpenFileDialog()) 
+            { 
+                if (fdb.ShowDialog() == DialogResult.OK)
+                {
+                    fdb.Title = "Find and Select VRChat.exe";
+                    fdb.ValidateNames = false;
+                    fdb.CheckFileExists = false;
+                    fdb.CheckPathExists = true;
+                    fdb.RestoreDirectory = true;
+                    vrchatPath = Path.GetDirectoryName(fdb.FileName);
+                }
+                return vrchatPath;
+            } 
+        }
+
         #region Public Functions / Variables - Log, APILink, VRChatpath ect. these are gloabally called throughout this project.
         public static void InstallLog(string text, bool state = false) { Console.WriteLine(text); if (state) { Console.Read(); } }
-        public string VRChatFolder() { using (FolderBrowserDialog fdb = new FolderBrowserDialog()) { if (fdb.ShowDialog() == DialogResult.OK) vrchatPath = fdb.SelectedPath; return fdb.SelectedPath; } }
         public readonly string APILink = "https://api.outerspace.store/session/";
         public string zipPath, vrchatPath, ClientVersion, ServerVersion = string.Empty;
         #endregion
