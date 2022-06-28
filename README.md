@@ -16,7 +16,7 @@
 ### How to:  
 ```
 Installation
-• 1.) Download & Open Installer
+• 1.) Download, Open Installer & Press 1 
 • 2.) Enter Key & Find 'VRChat.exe'
 • 3.) Click 'OK' & Follow On Screen Prompts
 
