@@ -81,7 +81,7 @@ namespace Spaceware
                     /*if selected folder path is Empty or doesnt = VRChat return folder not found*/
                     if (VRChatFolder() == null || !vrchatPath.Contains("VRChat")) return 0;
 
-                    /*Version Info / Downlaod Path*/
+                    /*Obtains ClientVersion / defaults to 1.0.0.0*/
                     if (File.Exists($"{vrchatPath}\\Area51\\DLL\\Area51.dll"))
                     {
                         ClientVersion = FileVersionInfo.GetVersionInfo($"{vrchatPath}\\Area51\\DLL\\Area51.dll").FileVersion;
@@ -97,8 +97,6 @@ namespace Spaceware
                     if (ServerVersion == ClientVersion) return 1;
 
                     /*removes older melonloader Folder/Files/proxy.dll*/
-                    string[] FoldersNames = { "MelonLoader", "Area51", "UserData\\Icons", "UserData\\Icons", "Plugins" };
-                    string[] FileNames = { "version.dll", "Mods\\SpaceShip.dll", "Mods\\AstralCore.dll" };
                     for (int i = 0; i < FoldersNames.Length; i++)
                     {
                         if (i == FoldersNames.Length) break;
@@ -123,7 +121,7 @@ namespace Spaceware
                     return 3;
                 }
             }
-            catch (Exception ErrorOnInstall) { Console.WriteLine($"[Install]{ErrorOnInstall.StackTrace}"); if (ErrorOnInstall.StackTrace != null) { return 2; } }
+            catch (Exception ErrorOnInstall) { InstallLog($"[Install]{ErrorOnInstall.StackTrace}"); if (ErrorOnInstall.StackTrace != null) { return 2; } }
             return 2;
         }
 
@@ -146,7 +144,7 @@ namespace Spaceware
             {
                 if (ErrorOnExtaction.InnerException != null)
                 {
-                    Console.WriteLine("[Extaction]{ErrorOnExtaction.StackTrace}"); InstallLog("Something really done goofed on Extaction, please join server and make a ticket.\nDiscord: https://discord.gg/Paul", true);
+                    InstallLog($"[Extaction] {ErrorOnExtaction.StackTrace}\nSomething really done goofed on Extaction, please join server and make a ticket.\nDiscord: https://discord.gg/Paul", true);
                 }
             }
             return false;
@@ -193,6 +191,8 @@ namespace Spaceware
         }
 
         #region Public Functions / Variables - Log, APILink, VRChatpath ect. these are gloabally called throughout this project.
+        public string[] FoldersNames = { "MelonLoader", "Area51", "UserData\\Icons", "UserData\\Icons", "Plugins" };
+        public string[] FileNames = { "version.dll", "Mods\\SpaceShip.dll", "Mods\\AstralCore.dll" };
         public static void InstallLog(string text, bool state = false) { Console.WriteLine(text); if (state) { Console.Read(); } }
         public readonly string APILink = "https://api.outerspace.store/session/";
         public string zipPath, vrchatPath, ClientVersion, ServerVersion = string.Empty;
