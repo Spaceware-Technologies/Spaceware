@@ -37,7 +37,7 @@ namespace Spaceware
                     InstallLog($"                        Client Website: https://outerspace.store/ | Client Version: {ClientVersion}                   ");
                     InstallLog("                                                                                                                       ");
                     InstallLog("=======================================================================================================================\n");
-                    Console.ForegroundColor = ConsoleColor.White; InstallLog("Checking for update....");
+                    Console.ForegroundColor = ConsoleColor.White; 
                     break;
                 case 2:
                     Console.ForegroundColor = ConsoleColor.Green;
@@ -61,7 +61,7 @@ namespace Spaceware
                     InstallLog("                                              - 2.)  Unban Tool                                                        ");
                     InstallLog("                                                                                                                       ");
                     InstallLog("=======================================================================================================================\n");
-                    Console.ForegroundColor = ConsoleColor.White; InstallLog("Choose an Option?: ");
+                    Console.ForegroundColor = ConsoleColor.White; InstallLog("[Info] Choose an Option?: ");
                     break;
             }
         }
@@ -80,13 +80,19 @@ namespace Spaceware
                 {
                     /*if selected folder path is Empty or doesnt = VRChat return folder not found*/
                     if (VRChatFolder() == null || !vrchatPath.Contains("VRChat")) return 0;
-
+                    InstallLog("[Info] Checking for update....");
+                   
                     /*Obtains ClientVersion / defaults to 1.0.0.0*/
                     if (File.Exists($"{vrchatPath}\\Area51\\DLL\\Area51.dll"))
                     {
+
                         ClientVersion = FileVersionInfo.GetVersionInfo($"{vrchatPath}\\Area51\\DLL\\Area51.dll").FileVersion;
                     }
-                    else { ClientVersion = "1.0.0.0"; }
+                    else 
+                    {
+                        InstallLog("[Info] New version found!");
+                        ClientVersion = "1.0.0.0";
+                    }
 
                     /*Obtains ServerVersion, zippath and Displays install banner*/
                     ServerVersion = client.DownloadString($"{APILink}version");
@@ -95,33 +101,63 @@ namespace Spaceware
 
                     /*If server version equals version on disk dont download else download the lastest version!*/
                     if (ServerVersion == ClientVersion) return 1;
-
+                   
                     /*removes older melonloader Folder/Files/proxy.dll*/
-                    for (int i = 0; i < FoldersNames.Length; i++)
+                    isYesOrNo = MessageBox.Show("Would you like to reinstall MelonLoader?", "YesOrNo?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (isYesOrNo == DialogResult.Yes)
                     {
-                        if (i == FoldersNames.Length) break;
-                        if (Directory.Exists($"{vrchatPath}\\{FoldersNames[i]}"))
+                        for (int i = 0; i < FoldersNames.Length; i++)
                         {
-                            Directory.Delete($"{vrchatPath}\\{FoldersNames[i]}", true);
-                            InstallLog($"Removed {vrchatPath}\\{FoldersNames[i]}, Done!");
+                            if (i == FoldersNames.Length) break;
+                            if (Directory.Exists($"{vrchatPath}\\{FoldersNames[i]}"))
+                            {
+                                Directory.Delete($"{vrchatPath}\\{FoldersNames[i]}", true);
+                                InstallLog($"[Info] Removed {vrchatPath}\\{FoldersNames[i]}, Done!");
+                            }
+                            HasMelons = "melon51";
+                        }
+
+                        for (int i = 0; i < FileNames.Length; i++)
+                        {
+                            if (i == FileNames.Length) break;
+                            if (File.Exists($"{vrchatPath}\\{FileNames[i]}"))
+                            {
+                                File.Delete($"{vrchatPath}\\{FileNames[i]}");
+                                InstallLog($"[Info] Removed {vrchatPath}\\{FileNames[i]}, Done!");
+                            }
                         }
                     }
-                    for (int i = 0; i < FileNames.Length; i++)
+                    else if (isYesOrNo == DialogResult.No)
                     {
-                        if (i == FileNames.Length) break;
-                        if (File.Exists($"{vrchatPath}\\{FileNames[i]}"))
+                        for (int i = 0; i < FoldersNamesNOML.Length; i++)
                         {
-                            File.Delete($"{vrchatPath}\\{FileNames[i]}");
-                            InstallLog($"Removed {vrchatPath}\\{FileNames[i]}, Done!");
+                            if (i == FoldersNamesNOML.Length) break;
+                            if (Directory.Exists($"{vrchatPath}\\{FoldersNamesNOML[i]}"))
+                            {
+                                Directory.Delete($"{vrchatPath}\\{FoldersNamesNOML[i]}", true);
+                                InstallLog($"[Info] Removed {vrchatPath}\\{FoldersNamesNOML[i]}, Done!");
+                            }
+                            HasMelons = "update";
+                        }
+                        for (int i = 0; i < FileNamesNOML.Length; i++)
+                        {
+                            if (i == FileNamesNOML.Length) break;
+                            if (File.Exists($"{vrchatPath}\\{FileNamesNOML[i]}"))
+                            {
+                                File.Delete($"{vrchatPath}\\{FileNamesNOML[i]}");
+                                InstallLog($"[Info] Removed {vrchatPath}\\{FileNamesNOML[i]}, Done!");
+                            }
                         }
                     }
 
-                    InstallLog($"Downloading New Update: {ServerVersion}");
-                    client.DownloadFile(new Uri($"{APILink}download/update/{File.ReadAllText("Authorization.json")}"), zipPath);
+                    
+
+                    InstallLog($"[Info] Downloading New Update: {ServerVersion}");
+                    client.DownloadFile(new Uri($"{APILink}download/{HasMelons}/{File.ReadAllText("Authorization.json")}"), zipPath);
                     return 3;
                 }
             }
-            catch (Exception ErrorOnInstall) { InstallLog($"[Install]{ErrorOnInstall.StackTrace}"); if (ErrorOnInstall.StackTrace != null) { return 2; } }
+            catch (Exception ErrorOnInstall) { InstallLog($"[Install] {ErrorOnInstall.StackTrace}"); if (ErrorOnInstall.StackTrace != null) { return 2; } }
             return 2;
         }
 
@@ -178,8 +214,7 @@ namespace Spaceware
             using (OpenFileDialog fdb = new OpenFileDialog())
             {
                 if (fdb.ShowDialog() == DialogResult.OK)
-                {
-                    fdb.Title = "Find and Select VRChat.exe";
+                {   
                     fdb.ValidateNames = false;
                     fdb.CheckFileExists = false;
                     fdb.CheckPathExists = true;
@@ -192,10 +227,13 @@ namespace Spaceware
 
         #region Public Functions / Variables - Log, APILink, VRChatpath ect. these are gloabally called throughout this project.
         public string[] FoldersNames = { "MelonLoader", "Area51", "UserData\\Icons", "UserData\\Icons", "Plugins" };
+        public string[] FoldersNamesNOML = {"Area51", "UserData\\Icons", "UserData\\Icons", "Plugins" };
         public string[] FileNames = { "version.dll", "Mods\\SpaceShip.dll", "Mods\\AstralCore.dll" };
+        public string[] FileNamesNOML = { "Mods\\SpaceShip.dll", "Mods\\AstralCore.dll" };
         public static void InstallLog(string text, bool state = false) { Console.WriteLine(text); if (state) { Console.Read(); } }
         public readonly string APILink = "https://api.outerspace.store/session/";
-        public string zipPath, vrchatPath, ClientVersion, ServerVersion = string.Empty;
+        public string zipPath, vrchatPath, ClientVersion, ServerVersion, HasMelons = string.Empty;
+        public static DialogResult isYesOrNo = new DialogResult();
         #endregion
 
     }
